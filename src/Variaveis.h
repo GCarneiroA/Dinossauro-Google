@@ -1,28 +1,35 @@
 
+#ifndef VARIAVEIS_H
+#define VARIAVEIS_H
 
+#include "Tipos.h"
+#include "Defines.h"
+#include <Tipos_PIG.h>
 
-    PIG_Cor     Cores[8] = {CINZA, AMARELO, VERDE, VERMELHO, AZUL, CIANO, LARANJA, ROXO};
+extern PIG_Cor     Cores[8];
 
-    Dinossauro  Dinossauros[POPULACAO_TAMANHO];
-    int         QuantidadeDinossauros = 0;
+extern Dinossauro  Dinossauros[POPULACAO_TAMANHO];
+extern int         QuantidadeDinossauros;
 
-    Chao        chao[CHAO_QUANTIDADE];
-    Montanha    montanha[MONTANHA_QUANTIDADE];
-    Nuvem       nuvem[NUVEM_QUANTIDADE];
-    Grafico     grafico;
-    Dinossauro* MelhorDinossauro;
+extern Chao        chao[CHAO_QUANTIDADE];
+extern Montanha    montanha[MONTANHA_QUANTIDADE];
+extern Nuvem       nuvem[NUVEM_QUANTIDADE];
+extern Grafico     grafico;
+extern Dinossauro* MelhorDinossauro;
 
-    Obstaculo   obstaculo[MAX_OBSTACULOS];
-    Obstaculo   obstaculosModelo[20000];
+extern Obstaculo   obstaculo[MAX_OBSTACULOS];
+extern Obstaculo   obstaculosModelo[20000];
 
-    int         Fonte, FonteVermelha, FonteAzul;
-    double      VELOCIDADE;
-    int         TimerGeral = 0;
-    double      Periodo = 0.005;
-    double      DistanciaRecorde, DistanciaAtual;
+extern int         Fonte, FonteVermelha, FonteAzul;
+extern double      VELOCIDADE;
+extern int         TimerGeral;
+extern double      Periodo;
+extern double      DistanciaRecorde;
+extern double      DistanciaAtual;
 
-    int         DinossaurosMortos;
-    int         ObstaculoDaVez = 1;
-    int         Geracao;
-    int         DesenharTela = 1;
+extern int         DinossaurosMortos;
+extern int         ObstaculoDaVez;
+extern int         Geracao;
+extern int         DesenharTela;
 
+#endif

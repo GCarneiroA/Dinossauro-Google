@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.17)
 
 project(Dino)
 
-find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS})
+find_package(Pig REQUIRED)
+include_directories(${PIG_INCLUDE_DIR})
 
 add_subdirectory(src)

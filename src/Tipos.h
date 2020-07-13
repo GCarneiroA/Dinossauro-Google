@@ -1,4 +1,7 @@
 
+#ifndef DINO_TIPOS_H
+#define DINO_TIPOS_H
+
 #define LARG_GRAFICO            600
 #define CHAO_QUANTIDADE         30
 #define MONTANHA_QUANTIDADE     3
@@ -7,7 +10,8 @@
 #define QTD_SPRITE_CACTUS       6
 #define MAX_OBSTACULOS          7
 
-
+#include "Sprites.h"
+#include "redeNeural.h"
 
 typedef struct dinossauro
 {
@@ -31,7 +35,7 @@ typedef struct dinossauro
 
     RedeNeural* Cerebro;
 
-}   Dinossauro;
+} Dinossauro;
 
 typedef struct obstaculo
 {
@@ -71,8 +75,4 @@ typedef struct grafico
 
 }   Grafico;
 
-
-
-
-
-
+#endif

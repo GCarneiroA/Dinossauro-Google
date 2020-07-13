@@ -1,21 +1,10 @@
 
-#define PASSARO_CODIGO_TIPO     5
-#define ESPINHO_CODIGO_TIPO     6
 
-#define MODO_JOGO               0       /// 0 = TREINANDO   - OBS: Aumentar tamanho da populacao para 2000
-                                        /// 1 = JOGAVEL     - OBS: Diminuir tamanho da populacao para 1
-
-#define POPULACAO_TAMANHO       2000
-
-
-#define DINO_BRAIN_QTD_LAYERS   1       /// Quantidade de camadas escondidas na rede neural
-#define DINO_BRAIN_QTD_INPUT    6       /// Quantidade de neuronios na camada de entrada
-#define DINO_BRAIN_QTD_HIDE     6       /// Quantidade de neuronios nas camadas escondidas
-#define DINO_BRAIN_QTD_OUTPUT   3       /// Quantidade de neuronios na camada de saida
+#include "Defines.h"
 
 #include "PIG.h"                        ///   Biblioteca Grafica
 #include "Sprites.h"                    ///   Todos os códigos sobre sprite
-#include "redeNeural.c"                 ///   Código da rede neural
+#include "redeNeural.h"                 ///   Código da rede neural
 #include "Tipos.h"                      ///   Definições de structs
 #include "Variaveis.h"                  ///   Variaveis globais
 #include "FuncoesAuxiliares.h"
@@ -29,48 +18,38 @@
 #include "Atualizar.h"
 #include "InputsRedeNeural.h"   /// Funções que captam a informação para entregar para a rede neural
 
-
 #include <thread>
 #include <chrono>
 
-///////////////////////////////////////////////////
-
 void DesenharThread()               /// Função chamada pela Thread responsavel por desenhar na tela
 {
-    while(PIG_JogoRodando == 1)
+    /*
+    while (PIG_JogoRodando == 1)
     {
         Desenhar();
         std::this_thread::sleep_for(std::chrono::milliseconds(5));
     }
+    */
 }
-
 
 void AplicarGravidade()
 {
-    for(int i=0; i<QuantidadeDinossauros; i++)
-    {
-        if(Dinossauros[i].Y > 15)
-        {
-            if(Dinossauros[i].Estado != 4)          /// VOANDO
+    for (int i = 0; i < QuantidadeDinossauros; i++) {
+        if (Dinossauros[i].Y > 15) {
+            if (Dinossauros[i].Estado != 4)          /// VOANDO
             {
                 Dinossauros[i].VelocidadeY = Dinossauros[i].VelocidadeY - (0.08);
-            }
-            else
-            {
-                if(Dinossauros[i].VelocidadeY <= 0)
+            } else {
+                if (Dinossauros[i].VelocidadeY <= 0)
                 {
                     Dinossauros[i].VelocidadeY = 0;
-                }
-                else
-                {
+                } else {
                     Dinossauros[i].VelocidadeY = Dinossauros[i].VelocidadeY - (0.08);
                 }
             }
 
             Dinossauros[i].Y = Dinossauros[i].Y + Dinossauros[i].VelocidadeY;
-        }
-        else
-        {
+        } else {
             Dinossauros[i].VelocidadeY = 0;
             Dinossauros[i].Y = 15;
             if(Dinossauros[i].Estado == 2)
@@ -85,9 +64,9 @@ void ControlarEstadoDinossauros()       /// Função responsavel por calcular a 
     double Saida[10];
     double Entrada[10];
 
-    for(int i=0; i<QuantidadeDinossauros; i++)
+    for (int i=0; i<QuantidadeDinossauros; i++)
     {
-        if(Dinossauros[i].Estado != 3)
+        if (Dinossauros[i].Estado != 3)
         {
             Entrada[0] = DistanciaProximoObstaculo(Dinossauros[i].X);            
             Entrada[1] = LarguraProximoObstaculo(Dinossauros[i].X);              
@@ -116,7 +95,7 @@ void ControlarEstadoDinossauros()       /// Função responsavel por calcular a 
                 Aviao = 1;
 
 
-            if(MODO_JOGO == 1 && i == 1)
+            if (MODO_JOGO == 1 && i == 1)
             {
                 Pular = 0;
                 Abaixar = 0;
@@ -244,7 +223,7 @@ void EncerrarPartida()
 
 void CarregarRede()
 {
-    FILE* f = fopen("rede","rb");
+    FILE* f = fopen("rede", "rb");
     fread(&Dinossauros[0].TamanhoDNA, 1, sizeof(int), f);
     fread(DNADaVez[0], Dinossauros[0].TamanhoDNA, sizeof(double), f);
     fclose(f);
@@ -252,7 +231,7 @@ void CarregarRede()
 
 void ConfiguracoesIniciais()
 {
-    CriarJanela("Google Dinosaur", 0);
+    //CriarJanela("Google Dinosauro", 0);
     InicializarSprites();
 
     InicializarChao();
@@ -264,17 +243,16 @@ void ConfiguracoesIniciais()
     CarregarListaObstaculos();
     InicializarGrafico();
 
-    TimerGeral          = CriarTimer();
-    Fonte               = CriarFonteNormal("..\\fontes\\arial.ttf", 15, PRETO,      0, PRETO);
-    FonteVermelha       = CriarFonteNormal("..\\fontes\\arial.ttf", 15, VERMELHO,   0, PRETO);
-    FonteAzul           = CriarFonteNormal("..\\fontes\\arial.ttf", 15, AZUL,       0, PRETO);
+    //TimerGeral          = CriarTimer();
+    //Fonte               = CriarFonteNormal("..\\fontes\\arial.ttf", 15, PRETO,      0, PRETO, 0);
+    //FonteVermelha       = CriarFonteNormal("..\\fontes\\arial.ttf", 15, VERMELHO,   0, PRETO, 0);
+    //FonteAzul           = CriarFonteNormal("..\\fontes\\arial.ttf", 15, AZUL,       0, PRETO, 0);
     DistanciaRecorde    = 0;
     Geracao             = 0;
     MelhorDinossauro    = &Dinossauros[0];
 
     InicializarDNA();
     InicializarNovaPartida();
-
 }
 
 void RandomMutations()
@@ -400,19 +378,18 @@ void VerificarFimDePartida()
     }
 }
 
-
-
 int main(int argc, char* args[])
 {
     ConfiguracoesIniciais();
 
-    std::thread Desenho(DesenharThread);
+    //std::thread Desenho(DesenharThread);
 
-    while(PIG_JogoRodando == 1)
+    //while(PIG_JogoRodando == 1)
     {
-        AtualizarJanela();
-        VerificarTeclas();
+        //AtualizarJanela();
+    //    VerificarTeclas();
 
+        /*
         if(TempoDecorrido(TimerGeral) >= Periodo)
         {
             MovimentarChao();
@@ -444,8 +421,9 @@ int main(int argc, char* args[])
             VerificarFimDePartida();
             ReiniciarTimer(TimerGeral);
         }
+        */
     }
-    FinalizarJanela();
+    //FinalizarJanela();
 
     return 0;
 }
